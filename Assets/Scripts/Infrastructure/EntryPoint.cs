@@ -22,6 +22,10 @@ namespace Infrastructure
         [SerializeField] private int _maxHealth;
         [SerializeField] private Transform _playerStartPosition;
         [SerializeField] private PlayerContainer _playerPrefab;
+        [Header("Bullet Settings")]
+        [SerializeField] private Bullet _bulletPrefab;
+        [SerializeField] private int _countBullets;
+        [SerializeField] private int _bulletPower;
         [FormerlySerializedAs("_canvasPrefab")]
         [Header("UI")]
         [SerializeField] private UIControl _uiPrefab;
@@ -29,6 +33,7 @@ namespace Infrastructure
         [SerializeField] private Enemy _enemyPrefab;
         [SerializeField] private int _enemyCount;
         [SerializeField] private float _enemySpeed;
+        [SerializeField] private int _enemyHealth;
         [Header("TileMap")]
         [SerializeField] private Tilemap _tileMapBase;
 
@@ -40,6 +45,7 @@ namespace Infrastructure
         private CamFollower camera;
         private IEnemyFabric enemyFabric;
         private EnemySpawner enemySpawner;
+
         private void Awake()
         {
             levelManager = new LevelManager(_timeLose, _timeWin);
@@ -50,9 +56,9 @@ namespace Infrastructure
             CreateAndInitPlayer();
             CreateAndInitCamera();
 
-            enemyFabric = new EnemyFabric(_enemyPrefab, _enemyCount);
+            enemyFabric = new EnemyFabric(_enemyPrefab, _enemyCount,_enemySpeed, _enemyHealth);
             Vector3Int size = _tileMapBase.size;
-            enemySpawner = new EnemySpawner(enemyFabric, _enemyCount, size, _enemySpeed);
+            enemySpawner = new EnemySpawner(enemyFabric, _enemyCount, size);
         }
 
         private void CreateAndInitUI()
@@ -76,7 +82,7 @@ namespace Infrastructure
         private void CreateAndInitPlayer()
         {
             character = Instantiate(_playerPrefab, _playerStartPosition.position, Quaternion.identity);
-            character.Init(levelManager, levelManager, inputService, storageService, _playerSpeed, _maxHealth);
+            character.Init(levelManager, levelManager, inputService, storageService, _playerSpeed, _maxHealth, _bulletPrefab, _countBullets, _bulletPower);
         }
 
         private void CreateAndInitCamera()

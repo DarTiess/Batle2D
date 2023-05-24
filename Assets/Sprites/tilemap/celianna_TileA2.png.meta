@@ -183,8 +183,8 @@ TextureImporter:
       name: celianna_TileA2_3
       rect:
         serializedVersion: 2
-        x: 64
-        y: 320
+        x: 96
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -205,11 +205,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 288
+        y: 320
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -229,8 +229,8 @@ TextureImporter:
         y: 305
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -250,8 +250,8 @@ TextureImporter:
         y: 320
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -268,11 +268,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 288
+        y: 305
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,12 +288,12 @@ TextureImporter:
       name: celianna_TileA2_8
       rect:
         serializedVersion: 2
-        x: 96
-        y: 304
+        x: 64
+        y: 288
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -313,8 +313,8 @@ TextureImporter:
         y: 320
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -334,8 +334,8 @@ TextureImporter:
         y: 288
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.51366115, y: 0.48633957}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -536,6 +536,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: celianna_TileA2_20
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 305
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2924c2213dec2c4099803fb3ded10a7
+      internalID: -358440803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celianna_TileA2_21
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db08e1152049dc747a07356b397197e3
+      internalID: -1067446389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -561,6 +603,7 @@ TextureImporter:
       celianna_TileA2_19: -2015931875
       celianna_TileA2_2: 583544312
       celianna_TileA2_20: -358440803
+      celianna_TileA2_21: -1067446389
       celianna_TileA2_3: 492959475
       celianna_TileA2_4: -1488522486
       celianna_TileA2_5: 1999030071

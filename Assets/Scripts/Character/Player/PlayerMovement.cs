@@ -53,11 +53,12 @@ namespace Character
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-        
 
         public void FinishGame()
         {
             playerSpeed  = 0;
         }
+
+       
     }
 }

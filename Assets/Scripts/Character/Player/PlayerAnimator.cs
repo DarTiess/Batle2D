@@ -18,6 +18,7 @@ namespace Character
         public void MoveAnimation(float speed)
         {
             animator.SetFloat(IS_MOVE,speed);  
+            animator.SetBool(ATTACK,false);
         }
 
         public void WinAnimation()

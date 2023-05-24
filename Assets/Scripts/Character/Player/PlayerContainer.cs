@@ -9,6 +9,7 @@ namespace Character
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(PlayerAnimator))]
     [RequireComponent(typeof(HealthBar))]
+    
     public class PlayerContainer : MonoBehaviour
     {
         private const string PLAYERHEALTH = "PlayerHealth";
@@ -24,13 +25,17 @@ namespace Character
         private int maxHealth;
         private int currentHealth=0;
         private bool canMove;
+        private PlayerAttack playerAttack;
+        [SerializeField]
+        private Transform _bulletPosition;
+        private Transform enemyTarget;
 
         public void Init(IFinishLevel levManager, 
                          IAttackEvent attackEvents, 
                          IInputService input, 
                          ISaveLoadService storage,
                          float speedMove,
-                         int health)
+                         int health, Bullet bulletPrefab, int countBullet, int bulletPower)
         {
             levelManager = levManager;
             attackEvent = attackEvents;
@@ -38,11 +43,13 @@ namespace Character
             storageService = storage;
             _playerAnimator = GetComponent<PlayerAnimator>();
             playerData = new PlayerHealthData();
-           
+            playerAttack = new PlayerAttack(bulletPrefab, countBullet, _bulletPosition, transform, bulletPower);
             InitHealthBarParameters(health);
 
             move = GetComponent<PlayerMovement>();
             move.Init(input,_playerAnimator, speedMove);
+            
+           
             canMove = true;
         }
 
@@ -71,8 +78,20 @@ namespace Character
 
         private void AttackEnemy()
         {
-            _playerAnimator.AttackAnimation();
-           Debug.Log("Attack");
+            if (enemyTarget != null)
+            {
+                playerAttack.PushBullet(enemyTarget);
+                _playerAnimator.AttackAnimation();
+            }
+        }
+        
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.TryGetComponent<Enemy.Enemy>(out Enemy.Enemy enemy))
+            {
+                enemyTarget = enemy.transform;
+               enemy.MoveToPlayer(transform);
+            }
         }
 
         public void TakeDamage(int damage)
@@ -86,7 +105,7 @@ namespace Character
             }
             
         }
-
+     
         private void FixedUpdate()
         {
             if (_isDead) return;

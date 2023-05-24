@@ -10,6 +10,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.adaptiveperformance@4.0.1/Runtime/Core/AdaptivePerformanceInit.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@3.0.18/Rider/Editor/RiderInitializer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Tests/SlimeRpg/Assets/Scripts/Player/Bullet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Tests/SlimeRpg/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Tests/SlimeRpg/Assets/Scripts/Player/PlayerBulletStack.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -84,7 +87,7 @@
       <workItem from="1684843835576" duration="8441000" />
       <workItem from="1684901578670" duration="3564000" />
       <workItem from="1684905770503" duration="112000" />
-      <workItem from="1684906009535" duration="19904000" />
+      <workItem from="1684906009535" duration="27147000" />
     </task>
     <servers />
   </component>

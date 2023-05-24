@@ -25,6 +25,13 @@ namespace Character
             valueProgress = curValue;
             _slider.value = curValue;
             
+        } 
+        public void Init(float value)
+        {
+            _slider.maxValue = value;
+            valueProgress = value;
+            _slider.value = value;
+            
         }
 
         public void SetBadValues(float price)

@@ -8,11 +8,15 @@ namespace Character.Enemy
         private Enemy enemyPrefab;
         private int countEnemy;
         private List<Enemy> enemiesList;
+        private float speedMove;
+        private int health;
 
-        public EnemyFabric(Enemy enemyPref, int count)
+        public EnemyFabric(Enemy enemyPref, int count, float speed, int hp )
         {
             enemyPrefab = enemyPref;
             countEnemy = count;
+            speedMove = speed;
+            health = hp;
             enemiesList = new List<Enemy>(countEnemy);
         }
 
@@ -21,7 +25,7 @@ namespace Character.Enemy
             for (int i = 0; i < countEnemy; i++)
             {
                 Enemy enemy = Object.Instantiate(enemyPrefab);
-                enemy.Hide();
+                enemy.Init(speedMove, health);
                 enemiesList.Add(enemy);
 
             }
