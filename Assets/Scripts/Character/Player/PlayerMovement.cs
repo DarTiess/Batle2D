@@ -12,16 +12,14 @@ namespace Character
         private Vector2 temp;
         private Rigidbody2D rigidbody;
         private float playerSpeed;
-        private float rotationSpeed;
         private bool isFacingRight;
 
-        public void Init(IInputService inputService, IMoveAnimator moveAnimator, float speedMove, float speedRotate)
+        public void Init(IInputService inputService, IMoveAnimator moveAnimator, float speedMove)
         {
             this.inputService=inputService;
             this.moveAnimator = moveAnimator;
             rigidbody = GetComponent<Rigidbody2D>();
             playerSpeed = speedMove;
-            rotationSpeed = speedRotate;
         }
         public void Move()
         {
@@ -59,7 +57,7 @@ namespace Character
 
         public void FinishGame()
         {
-            playerSpeed = rotationSpeed = 0;
+            playerSpeed  = 0;
         }
     }
 }

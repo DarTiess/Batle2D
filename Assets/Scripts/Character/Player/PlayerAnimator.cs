@@ -2,12 +2,12 @@
 
 namespace Character
 {
-    public class AnimatorController: MonoBehaviour, IMoveAnimator
+    public class PlayerAnimator: MonoBehaviour, IMoveAnimator
     {
         private Animator animator;
         private static readonly int IS_MOVE = Animator.StringToHash("IsMove");
         private static readonly int WIN = Animator.StringToHash("Win");
-        private static readonly int LOSE = Animator.StringToHash("Lose");
+        private static readonly int DEATH = Animator.StringToHash("Death");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
 
         private void Start()
@@ -27,7 +27,7 @@ namespace Character
 
         public void LoseAnimation()
         {
-            animator.SetTrigger(LOSE);  
+            animator.SetBool(DEATH, true);  
         }
 
         public void AttackAnimation()

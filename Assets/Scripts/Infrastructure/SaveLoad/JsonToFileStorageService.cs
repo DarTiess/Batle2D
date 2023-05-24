@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Net.Mime;
-using Unity.Plastic.Newtonsoft.Json;
+using SaveLoad;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
-namespace SaveLoad
-{
     public class JsonToFileStorageService: ISaveLoadService
     {
         public void Save(string key, object data, Action<bool> callback = null)
@@ -24,14 +22,19 @@ namespace SaveLoad
         public void Load<T>(string key, Action<T> callback)
         {
             string path = BuildPath(key);
-
-            using (var fileStream = new StreamReader(path))
+            
+            if (File.Exists(path))
             {
-                var json = fileStream.ReadToEnd();
-                var data = JsonConvert.DeserializeObject<T>(json);
+                using (var fileStream = new StreamReader(path))
+                {
+                    var json = fileStream.ReadToEnd();
+                    var data = JsonConvert.DeserializeObject<T>(json);
                 
-                callback?.Invoke(data);
+                    callback?.Invoke(data);
+                }
             }
+
+           
         }
 
         private string BuildPath(string key)
@@ -39,4 +42,3 @@ namespace SaveLoad
             return Path.Combine(Application.persistentDataPath, key);
         }
     }
-}

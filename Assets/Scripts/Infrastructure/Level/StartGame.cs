@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SaveLoad;
+using UnityEngine;
 
 //using GameAnalyticsSDK;   
 //using Facebook.Unity;
@@ -8,7 +9,6 @@ namespace Infrastructure.Level
     public class StartGame : MonoBehaviour
     {
         public LevelLoader LevelLoader;
-    
         // public string TenjinKeyAPI = "FTNSVXSVBJYARJM4HPHM8X9PYIPDWO1V";
 
         private void Awake()
@@ -34,7 +34,7 @@ namespace Infrastructure.Level
             FB.ActivateApp();
         }  
         */
-            LevelLoader.StartGame();    
+           LevelLoader.StartGame();    
         }
         /*
     void OnApplicationPause(bool pauseStatus)

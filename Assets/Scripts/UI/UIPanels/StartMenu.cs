@@ -8,8 +8,7 @@ namespace UI.UIPanels
         public override event Action ClickedPanel;
         protected override void OnClickedPanel()
         {
-            Debug.Log("Clicked Start win");
-           ClickedPanel?.Invoke();
+            ClickedPanel?.Invoke();
         }
     }
 }

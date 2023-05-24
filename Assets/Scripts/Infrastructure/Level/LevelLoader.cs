@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SaveLoad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,43 +8,58 @@ namespace Infrastructure.Level
     [CreateAssetMenu(fileName = "LevelLoader", menuName = "LevelLoader", order = 51)]
     public class LevelLoader : ScriptableObject, ILevelLoader
     {
+        private const string NUMSCENE = "NumScene";
         public List<string> NameScene;
 
-        public int NumLevel
-        {
-            get { return PlayerPrefs.GetInt("NumLevel"); }
-            set { PlayerPrefs.SetInt("NumLevel", value); }
-        }
-        public int NumScene
-        {                    
-            get { return PlayerPrefs.GetInt("NumScene"); }
-            set { PlayerPrefs.SetInt("NumScene", value); }
-        }
+        private ISaveLoadService storageService;
+        private SceneStorage sceneData;
+        private int sceneNum=0;
 
         public void StartGame()
         {
-            if (NumLevel == 0) NumLevel = 1;
-            if (NumScene == 0) NumScene = 1;
-        
-            LoadScene();    
+            Debug.Log("Load Scene Number " + sceneNum );
+
+            SceneManager.LoadScene(NameScene[sceneNum]); 
+        }
+       public void Init(ISaveLoadService storage)
+        {
+            storageService = storage;
+            sceneData = new SceneStorage();
+            storageService.Load<SceneStorage>(NUMSCENE, data =>
+            {
+                sceneNum = data.IntScene;
+                
+            });
+          
+           SaveSceneData();
         }
 
         public void LoadNextLevel()
         {
-            NumLevel += 1;
-            NumScene += 1;
-        
             LoadScene();           
         }
 
-        public void LoadScene()
+        private void LoadScene()
         {
-            int numLoadedScene = NumScene;
-            if (numLoadedScene <= NameScene.Count){numLoadedScene -= 1;}
-            if (numLoadedScene > NameScene.Count){numLoadedScene = (numLoadedScene - 1) % NameScene.Count;}
-            Debug.Log("Load Scene Number " + numLoadedScene + "Level Number " + NumLevel);
+            if (sceneNum >= NameScene.Count)
+            {
+                sceneNum = 0;
+            }
+            else
+            {
+                SaveSceneData();
+            }
+            Debug.Log("Load Scene Number " + sceneNum );
 
-            SceneManager.LoadScene(NameScene[numLoadedScene]);
+            SceneManager.LoadScene(NameScene[sceneNum]); 
+            sceneNum += 1;
+        }
+
+        private void SaveSceneData()
+        {
+            sceneData.SceneNumber = NameScene[sceneNum];
+            sceneData.IntScene = sceneNum;
+            storageService.Save(NUMSCENE, sceneData);
         }
 
         public void RestartScene()
@@ -52,3 +68,5 @@ namespace Infrastructure.Level
         }
     }
 }
+
+
