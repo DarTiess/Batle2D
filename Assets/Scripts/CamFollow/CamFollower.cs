@@ -1,5 +1,5 @@
 ﻿using System;
-using Infrastructure.Level;
+using Infrastructure.Level.Interfaces.Events;
 using UnityEngine;
 
 namespace CamFollow {
@@ -29,23 +29,23 @@ namespace CamFollow {
         [SerializeField] private ParticleSystem _particleWin;
 
         private Transform target;
-        private Vector3 _temp;
+        private Vector3 temp;
 
-        private LevelManager levelManager;
+        private ILevelEvents levelEvents;
 
-        public void Init(LevelManager levManager, Transform player)
+        public void Init(ILevelEvents levEvents, Transform player)
         {
-            levelManager = levManager;
+            levelEvents = levEvents;
             target = player;
-            levelManager.OnLevelWin += OnLevelWin;
-            levelManager.OnLevelLost += OnLevelLost;
+            levelEvents.OnLevelWin += OnLevelLostWin;
+            levelEvents.OnLevelLost += OnLevelLostLost;
         } 
     
-        private void OnLevelWin()               
+        private void OnLevelLostWin()               
         {
             if (_particleWin){_particleWin.Play();}
         }
-        private void OnLevelLost()
+        private void OnLevelLostLost()
         {
             SetStop();
         }
@@ -65,12 +65,12 @@ namespace CamFollow {
 
        private void MoveVector()
         {
-            _temp = target.position;
-            _temp.y += _vectorY;
-            _temp.z -= _vectorZ;
-            _temp.x = _vectorXFrom0 ? _vectorX : _temp.x + _vectorX ;   
+            temp = target.position;
+            temp.y += _vectorY;
+            temp.z -= _vectorZ;
+            temp.x = _vectorXFrom0 ? _vectorX : temp.x + _vectorX ;   
                                   
-            transform.position = Vector3.Lerp(transform.position,_temp,_speedVector * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position,temp,_speedVector * Time.deltaTime);
             if (_lookAtTarget) transform.LookAt(target.position); 
         }
         

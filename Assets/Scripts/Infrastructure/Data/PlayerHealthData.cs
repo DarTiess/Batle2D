@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Level
+﻿namespace Infrastructure.Data
 {
     public class PlayerHealthData
     {

@@ -27,9 +27,7 @@ namespace Character.Enemy
                 Enemy enemy = Object.Instantiate(enemyPrefab);
                 enemy.Init(speedMove, health);
                 enemiesList.Add(enemy);
-
             }
-
             return enemiesList;
         }
     }

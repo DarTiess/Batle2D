@@ -1,8 +1,7 @@
 ﻿using Infrastructure.Input;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Character
+namespace Character.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement: MonoBehaviour
@@ -30,9 +29,6 @@ namespace Character
             temp.y = inputVertical;
            
             moveAnimator.MoveAnimation(temp.magnitude);
-            
-           // rigidbody.transform.Translate(temp * Time.deltaTime * playerSpeed, Space.World);
-
             rigidbody.MovePosition(rigidbody.position + temp * playerSpeed * Time.fixedDeltaTime);
            
             if (inputHorizontal > 0 && isFacingRight)
@@ -44,6 +40,11 @@ namespace Character
             }
         }
 
+        public void FinishGame()
+        {
+            playerSpeed  = 0;
+        }
+
         private void Flip()
         {
             isFacingRight = !isFacingRight;
@@ -53,12 +54,5 @@ namespace Character
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-
-        public void FinishGame()
-        {
-            playerSpeed  = 0;
-        }
-
-       
     }
 }

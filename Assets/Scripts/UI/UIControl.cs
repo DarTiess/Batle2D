@@ -1,4 +1,6 @@
-﻿using Infrastructure.Level;
+﻿using Infrastructure.Inventory;
+using Infrastructure.Level.Interfaces;
+using Infrastructure.Level.Interfaces.Events;
 using UI.UIPanels;
 using UnityEngine;
 
@@ -12,12 +14,12 @@ namespace UI
         [SerializeField] private WinPanel _panelWin;  
         [SerializeField] private LostPanel _panelLost;
 
-        private ILevelManager levelManager;
+        private ILevelService _levelService;
         private ILevelEvents levelEvents;
         private ILevelLoader levelLoader;
-        public void Init(ILevelManager levManager, ILevelEvents levelEvents, ILevelLoader levelLoader)
+        public void Init(ILevelService levService, ILevelEvents levelEvents, ILevelLoader levelLoader, InventoryContainer inventoryContainer)
         {
-            levelManager = levManager;
+            _levelService = levService;
             this.levelEvents = levelEvents;
             this.levelLoader = levelLoader;
      
@@ -27,16 +29,11 @@ namespace UI
 
             _panelMenu.ClickedPanel += OnPlayGame;
             _panelInGame.AttackButtonClicked += OnAttack;
+            _panelInGame.Init(inventoryContainer);
             _panelLost.ClickedPanel += RestartGame;
             _panelInGame.ClickedPanel += OnPauseGame;
             _panelWin.ClickedPanel += LoadNextLevel;
             OnLevelStart();
-        }
-
-        private void OnAttack()
-        {
-            levelManager.OnAttack();
-           
         }
 
         private void OnDisable()
@@ -49,6 +46,12 @@ namespace UI
             _panelLost.ClickedPanel -= RestartGame;
             _panelInGame.ClickedPanel -= OnPauseGame;
             _panelWin.ClickedPanel -= LoadNextLevel;
+        }
+
+        private void OnAttack()
+        {
+            _levelService.OnAttack();
+           
         }
 
         private void OnLevelStart()      
@@ -72,12 +75,12 @@ namespace UI
         }
         private void OnPauseGame()
         {
-            levelManager.PauseGame();
+            _levelService.PauseGame();
         }
 
         private void OnPlayGame()
         { 
-            levelManager.PlayGame();
+            _levelService.PlayGame();
             HideAllPanels(); 
             _panelInGame.Show();         
         }

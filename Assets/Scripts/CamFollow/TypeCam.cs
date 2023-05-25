@@ -2,6 +2,9 @@
 {
     public enum TypeCam
     {
-        NotWork, Follower, Vector, MovePoint
+        NotWork=0, 
+        Follower=1, 
+        Vector=2, 
+        MovePoint=3
     }
 }

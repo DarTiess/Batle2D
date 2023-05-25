@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Level
+﻿namespace Infrastructure.Level.Interfaces
 {
     public interface ILevelLoader
     {

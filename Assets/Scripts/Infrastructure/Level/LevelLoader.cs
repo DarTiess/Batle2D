@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using SaveLoad;
+using Infrastructure.Data;
+using Infrastructure.Level.Interfaces;
+using Infrastructure.SaveLoad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,12 +36,17 @@ namespace Infrastructure.Level
            SaveSceneData();
         }
 
-        public void LoadNextLevel()
+       public void LoadNextLevel()
         {
             LoadScene();           
         }
 
-        private void LoadScene()
+       public void RestartScene()
+       {
+           SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+       }
+
+       private void LoadScene()
         {
             if (sceneNum >= NameScene.Count)
             {
@@ -60,11 +67,6 @@ namespace Infrastructure.Level
             sceneData.SceneNumber = NameScene[sceneNum];
             sceneData.IntScene = sceneNum;
             storageService.Save(NUMSCENE, sceneData);
-        }
-
-        public void RestartScene()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

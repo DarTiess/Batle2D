@@ -1,17 +1,17 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Character
+namespace Character.Player
 {
     public class Bullet: MonoBehaviour
     {
-        private int _damage;
-        public int Damage => _damage;
+        private int damage;
+        public int Damage => damage;
 
         public void Init(Transform parentTransform, int attackPower)
         {
             SetParent(parentTransform);
-            _damage = attackPower;
+            damage = attackPower;
             Hide();
         }
         public void Push(Transform target, Transform pushBallPoint)
@@ -24,27 +24,31 @@ namespace Character
                 Hide();
             });
         }
-        private void SetParent(Transform parentTransform)
-        {
-            transform.parent = parentTransform;
-        }
-        private void Hide()
-        {
-            gameObject.SetActive(false);
-        }
-        private void Show()
-        {
-            gameObject.SetActive(true);
-        }
-        private void SetToPushPosition(Vector3 pushPosition)
-        {
-            transform.position = pushPosition;
-        }
 
         public void TryDestroy()
         {
             DOTween.Kill(this);
             Hide();
+        }
+
+        private void SetParent(Transform parentTransform)
+        {
+            transform.parent = parentTransform;
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void SetToPushPosition(Vector3 pushPosition)
+        {
+            transform.position = pushPosition;
         }
     }
 }

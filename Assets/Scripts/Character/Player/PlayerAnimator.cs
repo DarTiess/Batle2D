@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Character
+namespace Character.Player
 {
     public class PlayerAnimator: MonoBehaviour, IMoveAnimator
     {
@@ -9,6 +9,7 @@ namespace Character
         private static readonly int WIN = Animator.StringToHash("Win");
         private static readonly int DEATH = Animator.StringToHash("Death");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
+        private static readonly int DAMAGE = Animator.StringToHash("Damage");
 
         private void Start()
         {
@@ -20,6 +21,7 @@ namespace Character
             animator.SetFloat(IS_MOVE,speed);  
             animator.SetBool(ATTACK,false);
         }
+      
 
         public void WinAnimation()
         {
@@ -34,6 +36,16 @@ namespace Character
         public void AttackAnimation()
         {
             animator.SetBool(ATTACK, true);
+        }
+
+        public void FinishDamageAnimation()
+        {
+            animator.SetBool(DAMAGE, false);
+        }
+
+        public void DamageAnimation()
+        {
+            animator.SetBool(DAMAGE,true);
         }
     }
 }

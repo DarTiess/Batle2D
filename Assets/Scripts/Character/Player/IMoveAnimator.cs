@@ -1,4 +1,4 @@
-﻿namespace Character
+﻿namespace Character.Player
 {
     public interface IMoveAnimator
     {

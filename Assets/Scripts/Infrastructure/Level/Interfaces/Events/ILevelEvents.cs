@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure.Level
+namespace Infrastructure.Level.Interfaces.Events
 {
     public interface ILevelEvents
     {

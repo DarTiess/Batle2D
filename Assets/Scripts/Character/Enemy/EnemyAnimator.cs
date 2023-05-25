@@ -10,6 +10,7 @@ namespace Character.Enemy
         private static readonly int IDLE = Animator.StringToHash("Idle");
         private static readonly int DAMAGE = Animator.StringToHash("damage");
         private static readonly int DEATH = Animator.StringToHash("death");
+        private static readonly int ATTACK = Animator.StringToHash("attack");
 
         private void Start()
         {
@@ -21,6 +22,7 @@ namespace Character.Enemy
             animator.SetBool(WALK, true);
             animator.SetFloat(IDLE,0);
             animator.SetBool(DAMAGE, false);
+            animator.SetBool(ATTACK, false);
         }
 
         public void IdleAnimation()
@@ -33,19 +35,29 @@ namespace Character.Enemy
             animator.SetBool(WALK, false);
             animator.SetFloat(IDLE,rndAnimation);
             animator.SetBool(DAMAGE, false);
+            animator.SetBool(ATTACK, false);
         }
 
         public void DamageAnimation()
         {
             animator.SetBool(WALK, false);
             animator.SetBool(DAMAGE, true);
+            animator.SetBool(ATTACK, false);
         }
 
         public void Death()
         {
             animator.SetBool(WALK, false);
             animator.SetBool(DAMAGE, false);
+            animator.SetBool(ATTACK, false);
             animator.SetTrigger(DEATH);
+        }
+
+        public void AttackAnimation()
+        {
+            animator.SetBool(ATTACK, true);
+            animator.SetBool(WALK, false);
+            animator.SetBool(DAMAGE, false);
         }
     }
 }

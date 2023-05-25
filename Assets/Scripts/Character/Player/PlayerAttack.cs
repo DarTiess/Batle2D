@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Character
+namespace Character.Player
 {
     public class PlayerAttack
     {
-        private Bullet _ballPref;
-        private int _countBalls;
-        private Transform _pushBallPoint;
-        private Transform _parentTransform;
-        private List<Bullet> _ballList;
-        private int _indexBall = 0;
-        private int _attackPower;
+        private Bullet ballPref;
+        private int countBalls;
+        private Transform pushBallPoint;
+        private Transform parentTransform;
+        private List<Bullet> ballList;
+        private int indexBall = 0;
+        private int attackPower;
 
         public PlayerAttack(Bullet ballPref, 
                             int countBalls, 
@@ -19,34 +19,34 @@ namespace Character
                             Transform originParent,
                             int attackPower)
         {
-            _ballPref = ballPref;
-            _countBalls = countBalls;
-            _pushBallPoint = pushBallPoint;
-            _parentTransform = originParent;
-            _attackPower = attackPower;
-            _ballList = new List<Bullet>(_countBalls);
+            this.ballPref = ballPref;
+            this.countBalls = countBalls;
+            this.pushBallPoint = pushBallPoint;
+            parentTransform = originParent;
+            this.attackPower = attackPower;
+            ballList = new List<Bullet>(this.countBalls);
             CreateBulletsList();
         }
 
         public void PushBullet(Transform target)
         {
-            _ballList[_indexBall].Push(target, _pushBallPoint);
-            _indexBall++;
-            if (_indexBall >= _ballList.Count)
+            ballList[indexBall].Push(target, pushBallPoint);
+            indexBall++;
+            if (indexBall >= ballList.Count)
             {
-                _indexBall = 0;
+                indexBall = 0;
             }
                               
         }
 
         private void CreateBulletsList()
         {
-            for (int i = 0; i < _countBalls; i++)
+            for (int i = 0; i < countBalls; i++)
             {
-                Bullet bullet = Object.Instantiate(_ballPref, _pushBallPoint.transform.position, _pushBallPoint.transform.rotation);
-                bullet.Init(_parentTransform, _attackPower);
+                Bullet bullet = Object.Instantiate(ballPref, pushBallPoint.transform.position, pushBallPoint.transform.rotation);
+                bullet.Init(parentTransform, attackPower);
                 
-                _ballList.Add(bullet);
+                ballList.Add(bullet);
             }
         }
     }

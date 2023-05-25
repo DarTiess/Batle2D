@@ -1,39 +1,91 @@
 ﻿using System;
-using System.Collections;
+using Character.Player;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 namespace Character.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(HealthBar))]
-   
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class Enemy: MonoBehaviour
     {
+        public event Action<Transform> OnDead;
+      
+        [FormerlySerializedAs("explosionEffect")]
+        [SerializeField] private ParticleSystem _explosionEffect;
+      
         private float moveSpeed;
         private Transform player;
         private bool canMove;
         private EnemyAnimator animator;
-        private Rigidbody2D rigidbody;
+        private CapsuleCollider2D collider;
         private bool isFacingRight;
         private HealthBar healthBar;
         private int hp;
-        private bool _isDead;
+        private bool isDead;
 
         private void Update()
         {
-            if(_isDead) return;
-            if(!canMove)
+            if(isDead)
+            {
                 return;
-            
+            }
+
+            if(!canMove)
+            {
+                return;
+            }
+
             Move();
         }
-        
+
+        public void Init(float speed, int health)
+        { 
+            animator = GetComponent<EnemyAnimator>();
+            healthBar = GetComponent<HealthBar>();
+            collider = GetComponent<CapsuleCollider2D>();
+            moveSpeed = speed;
+            hp = health;
+            healthBar.Init(hp);
+            Hide();
+        }
+
         public void PushEnemy(int rndX, int rndY)
         {
             gameObject.transform.position = new Vector2(rndX, rndY);
             Show();
+        }
+
+        public void MoveToPlayer(Transform target)
+        {
+            player = target;
+            canMove = true;
+        }
+
+        public void ContinueMove()
+        {
+            canMove = true;
+        }
+
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.TryGetComponent(out PlayerContainer player))
+            {
+                player.TakeDamage(1);
+                canMove = false;
+                animator.AttackAnimation();
+            }
+
+            if (col.gameObject.TryGetComponent(out Bullet bullet))
+            {
+                canMove = false;
+                animator.DamageAnimation();
+                _explosionEffect.transform.position = bullet.transform.position;
+                _explosionEffect.Play();
+                HealthDamage(bullet);
+                bullet.TryDestroy();
+            }
         }
 
         private void Show()
@@ -42,26 +94,9 @@ namespace Character.Enemy
             animator.IdleAnimation();
         }
 
-        public void Init(float speed, int health)
-        { 
-            animator = GetComponent<EnemyAnimator>();
-            rigidbody = GetComponent<Rigidbody2D>();
-            healthBar = GetComponent<HealthBar>();
-            moveSpeed = speed;
-            hp = health;
-            healthBar.Init(hp);
-            Hide();
-        }
-
         private void Hide()
         {
             gameObject.SetActive(false);
-        }
-
-        public void MoveToPlayer(Transform target)
-        {
-            player = target;
-            canMove = true;
         }
 
         private void Move()
@@ -71,7 +106,7 @@ namespace Character.Enemy
            
             RotateToTarget();
         }
-        
+
         private void RotateToTarget()
         {
             Vector2 direction = player.position - transform.position;
@@ -94,41 +129,18 @@ namespace Character.Enemy
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            if (col.gameObject.TryGetComponent<PlayerContainer>(out PlayerContainer player))
-            {
-                player.TakeDamage(1);
-              
-            }
-
-            if (col.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
-            {
-                Debug.Log("Bullet");
-               
-                canMove = false;
-                animator.DamageAnimation(); 
-                HealthDamage(bullet);
-                bullet.TryDestroy();
-            }
-        }
 
         private void HealthDamage(Bullet bullet)
         {
             hp -= bullet.Damage;
             healthBar.SetBadValues(bullet.Damage);
-            if (hp <= 0)
+            if (hp <= 0 && !isDead)
             {
-                _isDead = true;
+                isDead = true;
                 animator.Death();
+                collider.enabled = false;
+                OnDead?.Invoke(transform);
             }
-          
         }
-        public void ContinueMove()
-        {
-            canMove = true;
-        }
-
-      
     }
 }
